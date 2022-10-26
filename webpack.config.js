@@ -18,6 +18,14 @@ module.exports = {
 					extensions: ['.js', '.jsx', '.json'],
 				},
 			},
+			{
+				// loads .html files
+				test: /\.(html)$/,
+				include: [path.resolve(__dirname, 'app/src')],
+				use: {
+					loader: 'html-loader',
+				},
+			},
 		],
 	},
 };
