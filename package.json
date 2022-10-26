@@ -15,7 +15,7 @@
 		"dist-mac": "npm run preprod && electron-builder --mac",
 		"dist-linux": "npm run preprod && electron-builder --linux",
 		"dist-windows": "npm run preprod && electron-builder --windows",
-		"dist-all": "npm run preprod && electron-builder --mac --linux --windows"
+		"dist-all": "npm run preprod && electron-builder -mlw"
 	},
 	"build": {
 		"productName": "MyDummyApp",
@@ -41,6 +41,7 @@
 			]
 		},
 		"linux": {
+			"maintainer": "Somebody",
 			"target": [
 				"deb",
 				"rpm",
@@ -50,7 +51,7 @@
 		}
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Reese",
 	"license": "ISC",
 	"devDependencies": {
 		"babel-loader": "^8.2.5",
