@@ -2,7 +2,7 @@
 	"name": "clean-electron-react",
 	"version": "0.0.1",
 	"description": "",
-	"main": "./app/electron/main.js",
+	"main": "app/electron/main.js",
 	"private": true,
 	"directories": {
 		"doc": "docs",

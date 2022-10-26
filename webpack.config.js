@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-	// Electron entry point
 	entry: './app/src/index.jsx',
 	output: {
 		path: path.resolve(__dirname, 'app/dist'),
@@ -31,7 +30,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, 'index.html'),
+			template: path.resolve(__dirname, 'app/src/index.html'),
 			filename: 'index.html',
 		}),
 	],

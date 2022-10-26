@@ -1,13 +1,21 @@
 const { app, BrowserWindow } = require('electron');
 
-let mainWindow;
-
 function createWindow() {
-	mainWindow = new BrowserWindow({
+	// Create a new window
+	const window = new BrowserWindow({
 		width: 800,
 		height: 600,
 		show: false,
 	});
+
+	// Event listeners on the window
+	window.webContents.on('did-finish-load', () => {
+		window.show();
+		window.focus();
+	});
+
+	// Load our HTML file
+	window.loadFile('app/dist/index.html');
 }
 
 // This method is called when Electron
