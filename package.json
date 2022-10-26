@@ -11,7 +11,11 @@
 		"prod": "cross-env NODE_ENV=production electron .",
 		"postinstall": "electron-builder install-app-deps",
 		"pack": "electron-builder --dir",
-		"dist": "electron-builder"
+		"dist": "npm run preprod && electron-builder",
+		"dist-mac": "npm run preprod && electron-builder --mac",
+		"dist-linux": "npm run preprod && electron-builder --linux",
+		"dist-windows": "npm run preprod && electron-builder --windows",
+		"dist-all": "npm run preprod && electron-builder -mwl"
 	},
 	"build": {
 		"productName": "MyDummyApp",
