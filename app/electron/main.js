@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 function createWindow() {
 	// Create a new window
@@ -15,8 +16,11 @@ function createWindow() {
 	});
 
 	// Load our HTML file
-	//window.loadFile('app/dist/index.html');
-	window.loadURL('http://localhost:40992');
+	if (isDevelopment) {
+		window.loadURL('http://localhost:40992');
+	} else {
+		window.loadFile('app/dist/index.html');
+	}
 }
 
 // This method is called when Electron
