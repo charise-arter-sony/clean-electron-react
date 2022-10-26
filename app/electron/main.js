@@ -1,12 +1,32 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
+
+let window;
+
+// Show Dialog - Native
+const handleNativeFileOpen = async () => {
+	const { canceled, filePaths } = await dialog.showOpenDialog();
+	if (canceled) {
+		return;
+	} else {
+		return filePaths[0];
+	}
+};
 
 function createWindow() {
 	// Create a new window
-	const window = new BrowserWindow({
+	window = new BrowserWindow({
 		width: 800,
 		height: 600,
 		show: false,
+		webPreferences: {
+			nodeIntegration: false,
+			nodeIntegrationInWorker: false,
+			nodeIntegrationInSubFrames: false,
+			contextIsolation: true,
+			preload: path.join(__dirname, 'preload.js'),
+		},
 	});
 
 	// Event listeners on the window
@@ -44,4 +64,21 @@ app.on('window-all-closed', function () {
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}
+});
+
+// IPC events
+// Open file
+ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
+
+// Node test
+ipcMain.on('nodeTest', (e, args) => {
+	// cp.exec('test.js');
+	//cp.exec('run ./modules/test.js');
+	e.sender.send(
+		'test-succeeded',
+		'Main -> Renderer:\n Message response from Main'
+	);
+	console.log(
+		`Message from Renderer: Should call child process (Needs more work): \n ${args}`
+	);
 });
