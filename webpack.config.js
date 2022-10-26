@@ -26,6 +26,12 @@ module.exports = {
 					loader: 'html-loader',
 				},
 			},
+			{
+				// loads .css files
+				test: /\.css$/,
+				include: [path.resolve(__dirname, 'app/src')],
+				use: ['style-loader', 'css-loader'],
+			},
 		],
 	},
 	plugins: [
