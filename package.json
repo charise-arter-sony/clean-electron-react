@@ -4,15 +4,42 @@
 	"description": "",
 	"main": "app/electron/main.js",
 	"private": true,
-	"directories": {
-		"doc": "docs",
-		"test": "test"
-	},
 	"scripts": {
 		"dev-server": "webpack serve --mode development --config ./webpack.development.js",
 		"dev": "cross-env NODE_ENV=development electron .",
 		"preprod": "webpack --mode production --config ./webpack.production.js",
-		"prod": "cross-env NODE_ENV=production electron ."
+		"prod": "cross-env NODE_ENV=production electron .",
+		"postinstall": "electron-builder install-app-deps",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"build": {
+		"productName": "MyDummyApp",
+		"appId": "com.myplaceholdercompany|electron.mydummyapp",
+		"directories": {
+			"buildResources": "resources"
+		},
+		"mac": {
+			"target": [
+				"dmg",
+				"zip",
+				"7z"
+			]
+		},
+		"win": {
+			"target": [
+				"nsis",
+				"msi"
+			]
+		},
+		"linux": {
+			"target": [
+				"deb",
+				"rpm",
+				"snap",
+				"AppImage"
+			]
+		}
 	},
 	"keywords": [],
 	"author": "",
@@ -22,6 +49,7 @@
 		"cross-env": "^7.0.3",
 		"css-loader": "^6.7.1",
 		"electron": "^21.2.0",
+		"electron-builder": "^23.6.0",
 		"html-loader": "^4.2.0",
 		"html-webpack-plugin": "^5.5.0",
 		"style-loader": "^3.3.1",
