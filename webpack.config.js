@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
 	// Electron entry point
 	entry: './app/src/index.jsx',
