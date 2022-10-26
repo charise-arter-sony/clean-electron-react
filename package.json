@@ -15,7 +15,7 @@
 		"dist-mac": "npm run preprod && electron-builder --mac",
 		"dist-linux": "npm run preprod && electron-builder --linux",
 		"dist-windows": "npm run preprod && electron-builder --windows",
-		"dist-all": "npm run preprod && electron-builder -mwl"
+		"dist-all": "npm run preprod && electron-builder --mac --linux --windows"
 	},
 	"build": {
 		"productName": "MyDummyApp",
@@ -23,6 +23,10 @@
 		"directories": {
 			"buildResources": "resources"
 		},
+		"files": [
+			"app/dist/**/*",
+			"app/electron/**/*"
+		],
 		"mac": {
 			"target": [
 				"dmg",
