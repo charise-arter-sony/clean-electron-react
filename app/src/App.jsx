@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import NativeOpen from './components/NativeOpen';
 import NodeTest from './components/NodeTest';
+import Counter from './components/Counter';
 
 function App() {
 	const [filePath, setFilePath] = useState([]);
+	const [count, setCount] = useState(0);
 
 	// Message response Test
 	window.api.receive('test-succeeded', () => {
@@ -26,6 +28,7 @@ function App() {
 		<section>
 			<NativeOpen fileOpen={fileOpen} filePath={filePath} />
 			<NodeTest testNode={testNode} />
+			<Counter count={count} />
 		</section>
 	);
 }
