@@ -11,7 +11,7 @@ on:
 
 # job builds start here, will run in parallel unless specified otherwise
 jobs:
-  build_on_mac:
+  install_mac:
     runs-on: macos-latest
 
     strategy:
@@ -27,10 +27,29 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: see the directory
-        run: dir
-      # - name: Build on Mac test
-      #   run: npm run dist-mac
+      - name: install dependencies
+        run: npm install
+
+  build_on_mac:
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [16.x, 18.x]
+
+    needs: install_mac
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Build on Mac test
+        run: npm run dist-mac
   # build_on_win:
   #   runs-on: windows-latest
   #   strategy:
