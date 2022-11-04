@@ -1,0 +1,37 @@
+# name of my github action
+name: CI Test Build
+
+run-name: ${{ github.actor }} is learning Github Actions and testing build ci/cd
+
+# specifies where to run
+on: [push]
+
+# job builds start here, will run in parallel unless specified otherwise
+jobs:
+  build_on_mac:
+    runs-on: macOS-latest
+    steps:
+      uses: actions/checkout@v3
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.17.0'
+
+    - name: see the directory
+      run: dir
+
+    - name: Build on Mac test
+      run: npm run dist-mac
+
+  build_on_win:
+    runs-on: windows-latest
+    steps:
+      uses: actions/checkout@v3
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.17.0'
+
+    - name: see directory
+      run: dir
+
+    - name: Build on Windows test
+      run: npm run dist-windows
