@@ -1,37 +1,56 @@
 # name of my github action
-name: CI Test Build
+name: CI Test Build Node.js
 
 run-name: ${{ github.actor }} is learning Github Actions and testing build ci/cd
 
 # specifies where to run
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 # job builds start here, will run in parallel unless specified otherwise
 jobs:
   build_on_mac:
-    runs-on: macOS-latest
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [16.x, 18.x]
+
     steps:
-      uses: actions/checkout@v3
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16.17.0'
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-    - name: see the directory
-      run: dir
+      - name: see the directory
+        run: dir
 
-    - name: Build on Mac test
-      run: npm run dist-mac
+      - name: Build on Mac test
+        run: npm run dist-mac
 
   build_on_win:
     runs-on: windows-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [16.x, 18.x]
+
     steps:
-      uses: actions/checkout@v3
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16.17.0'
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-    - name: see directory
-      run: dir
+      - name: see the directory
+        run: dir
 
-    - name: Build on Windows test
-      run: npm run dist-windows
+      - name: Build on Windows test
+        run: npm run dist-windows
