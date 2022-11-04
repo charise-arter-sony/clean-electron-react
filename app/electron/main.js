@@ -1,11 +1,6 @@
-const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
-
-// redux test
-const store = require('./state/store');
-const counter = require('./state/main_slices/counterSlice');
-
 
 let window;
 
@@ -40,30 +35,6 @@ function createWindow() {
 		window.focus();
 	});
 
-	// variable
-	let counterValue = store.getState().counter.count;
-
-	// Menu for counter test
-	const menu = Menu.buildFromTemplate([
-		{
-			label: app.name,
-			submenu: [
-				{
-					click: () =>
-						window.webContents.send('update-counter', counterValue + 1),
-					label: 'Increment +',
-				},
-				{
-					click: () =>
-						window.webContents.send('update-counter', counterValue - 1),
-					label: 'Decrement -',
-				},
-			],
-		},
-	]);
-
-	Menu.setApplicationMenu(menu);
-
 	// Load our HTML file
 	if (isDevelopment) {
 		window.loadURL('http://localhost:40992');
@@ -76,9 +47,6 @@ function createWindow() {
 // has finished initializing
 app.whenReady().then(() => {
 	createWindow();
-	console.log(
-		` At window creation counter state: ${store.getState().counter.count}`
-	);
 
 	app.on('activate', () => {
 		// On macOS it's common to re-create a window in the app when the
@@ -101,17 +69,6 @@ app.on('window-all-closed', function () {
 // IPC events
 // Open file
 ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
-
-// redux test
-ipcMain.on('counter-value', (e, value) => {
-	console.log('value reply back from Renderer: ', value);
-});
-ipcMain.on('countData', (e, data) => {
-	counter.count = data;
-	console.log(
-		`Main counter state after btn click: ${store.getState().counter.count}`
-	);
-});
 
 // Node test
 ipcMain.on('nodeTest', (e, args) => {
