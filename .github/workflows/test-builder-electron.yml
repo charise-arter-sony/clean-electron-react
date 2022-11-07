@@ -34,29 +34,23 @@ jobs:
 
       - name: Initial build for webpack
         run: npm run webpack --mode production --config ./webpack.production.js
-
-  build_on_win:
-    runs-on: windows-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [16.x, 18.x]
-
-    needs: dependencies_install
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3}
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Build on Windows test
-        run: npm run dist-windows
+  # build_on_win:
+  #   runs-on: windows-latest
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       node-version: [16.x, 18.x]
+  #   needs: dependencies_install
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3}
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'npm'
+  #     - name: Build on Windows test
+  #       run: npm run dist-windows
   # build_on_mac:
   #   runs-on: macos-latest
   #   strategy:
