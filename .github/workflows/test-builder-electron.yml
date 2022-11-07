@@ -1,7 +1,7 @@
 # name of my github action
 name: CI Test Build Node.js
 
-run-name: ${{ github.actor }} is learning Github Actions and testing build ci/cd
+run-name: ${{ github.actor }} is testing build ci/cd
 
 # specifies where to run
 on:
@@ -11,7 +11,7 @@ on:
 
 # job builds start here, will run in parallel unless specified otherwise
 jobs:
-  install_mac:
+  dependencies_install:
     runs-on: macos-latest
 
     strategy:
@@ -20,8 +20,9 @@ jobs:
         node-version: [16.x, 18.x]
 
     steps:
+      - name: Checkout repo
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -30,32 +31,38 @@ jobs:
       - name: install dependencies
         run: npm install
 
-  build_on_mac:
-    runs-on: macos-latest
+      - name: Initial build for webpack
+        run: npm run preprod
+
+  build_on_win:
+    runs-on: windows-latest
 
     strategy:
       fail-fast: true
       matrix:
         node-version: [16.x, 18.x]
 
-    needs: install_mac
-    
+    needs: dependencies_install
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3}
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Build on Mac test
-        run: npm run dist-mac
-  # build_on_win:
-  #   runs-on: windows-latest
+      - name: Build on Windows test
+        run: npm run dist-windows
+  # build_on_mac:
+  #   runs-on: macos-latest
   #   strategy:
   #     fail-fast: true
   #     matrix:
   #       node-version: [16.x, 18.x]
+  #   needs: dependencies_install
   #   steps:
   #     - uses: actions/checkout@v3
   #     - name: Use Node.js ${{ matrix.node-version }}
@@ -63,7 +70,5 @@ jobs:
   #       with:
   #         node-version: ${{ matrix.node-version }}
   #         cache: 'npm'
-  #     - name: see the directory
-  #       run: dir
-  #     - name: Build on Windows test
-  #       run: npm run dist-windows
+  #     - name: Build on Mac test
+  #       run: npm run dist-mac
