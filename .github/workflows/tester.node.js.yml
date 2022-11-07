@@ -27,5 +27,5 @@ jobs:
           cache: 'npm'
       - name: install dependencies
         run: npm install
-      # - name: initial build for webpack
-      #   run: npm run webpack --mode production --config ./webpack.production.js
+      - name: initial build for webpack
+        run: npm run webpack --mode production --config ../../webpack.production.js
