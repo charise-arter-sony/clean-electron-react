@@ -35,5 +35,5 @@ jobs:
         run: dir ./app
       - name: Build for Windows
         run: npm run dist-windows
-      - name: check for files
-        run: dir ./app/dist
+      - name: check for built dist files
+        run: dir ./dist
