@@ -13,9 +13,9 @@
 		"pack": "electron-builder --dir",
 		"dist": "npm run preprod && electron-builder",
 		"dist-mac": "npm run preprod && electron-builder --publish never --mac ",
-		"dist-linux": "npm run preprod && electron-builder --linux",
+		"dist-linux": "npm run preprod && electron-builder --publish never --linux",
 		"dist-windows": "npm run preprod && electron-builder --publish never --windows",
-		"dist-all": "npm run preprod && electron-builder -mlw"
+		"dist-all": "npm run preprod && electron-builder --publish never -mlw"
 	},
 	"build": {
 		"productName": "MyDummyApp",
