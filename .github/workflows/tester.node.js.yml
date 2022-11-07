@@ -28,7 +28,7 @@ jobs:
       - name: install dependencies
         run: npm install
       - name: see directory
-        run: ls
+        run: dir
   # webpack_builder_win:
   #   needs: win_dependencies_install
   #   runs-on: windows-latest
