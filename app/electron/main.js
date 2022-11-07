@@ -20,6 +20,7 @@ function createWindow() {
 		width: 800,
 		height: 600,
 		show: false,
+		autoHideMenuBar: true,
 		webPreferences: {
 			nodeIntegration: false,
 			nodeIntegrationInWorker: false,
