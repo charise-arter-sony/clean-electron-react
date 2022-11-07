@@ -56,12 +56,12 @@ jobs:
       - name: install dependencies
         run: npm install
       - name: see directory
-        run: dir
+        run: ls
       - name: Run preproduction script
         run: npm run preprod
       - name: Check for dist directory
-        run: dir ./app
+        run: ls ./app
       - name: Build for Mac
         run: npm run dist-mac
       - name: check for built dist files
-        run: dir ./dist
+        run: ls ./dist
