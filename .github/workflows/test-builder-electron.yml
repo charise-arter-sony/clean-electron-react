@@ -12,7 +12,7 @@ on:
 # job builds start here, will run in parallel unless specified otherwise
 jobs:
   dependencies_install:
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     strategy:
       fail-fast: true
@@ -22,6 +22,7 @@ jobs:
     steps:
       - name: Checkout repo
       - uses: actions/checkout@v3
+
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -32,7 +33,7 @@ jobs:
         run: npm install
 
       - name: Initial build for webpack
-        run: npm run preprod
+        run: npm run webpack --mode production --config ./webpack.production.js
 
   build_on_win:
     runs-on: windows-latest
