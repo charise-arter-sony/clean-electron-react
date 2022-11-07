@@ -29,6 +29,10 @@ jobs:
         run: npm install
       - name: see directory
         run: dir
+      - name: Run preproduction script
+        run: npm run preprod
+      - name: Check for dist directory
+        run: dir ./app
   # webpack_builder_win:
   #   needs: win_dependencies_install
   #   runs-on: windows-latest
