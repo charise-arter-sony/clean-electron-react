@@ -28,4 +28,10 @@ jobs:
       - name: install dependencies
         run: npm install
       - name: initial build for webpack
-        run: npm run webpack --mode production --config ../../webpack.production.js
+        run: npm run webpack serve --mode production --config ../../webpack.production.js
+  # webpack_builder_win:
+  #   needs: win_dependencies_install
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: initial build for webpack
+  #       run: npm run webpack serve --mode production --config ../../webpack.production.js
