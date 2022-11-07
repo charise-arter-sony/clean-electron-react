@@ -10,7 +10,7 @@ on:
     branches: ['main']
 
 jobs:
-  build:
+  win_dependencies_install:
     runs-on: windows-latest
 
     strategy:
