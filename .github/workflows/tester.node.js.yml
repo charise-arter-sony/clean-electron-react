@@ -71,7 +71,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-18.x]
+        os: [ubuntu-latest]
         node-version: [16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
