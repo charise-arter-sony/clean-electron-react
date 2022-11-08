@@ -111,6 +111,9 @@ jobs:
       - name: install dependencies
         run: npm install
 
+      - name: install DMG license
+        run: npm i dmg-license
+
       - name: Run preproduction script
         run: npm run preprod
 
