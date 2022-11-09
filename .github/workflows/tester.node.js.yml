@@ -28,7 +28,7 @@ jobs:
         run: npm run dist-windows
 
       - name: Upload Windows build files
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3
         with:
           name: windows-build-test
           path: ./dist
@@ -68,11 +68,7 @@ jobs:
         run: ls ./dist
 
   linux_install:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-20.04, ubuntu-18.04]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
