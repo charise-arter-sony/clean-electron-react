@@ -70,11 +70,10 @@ jobs:
 
   linux_install:
     needs: mac_install
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-18.04]
         node-version: [16.x, 18.x]
 
     steps:
