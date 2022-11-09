@@ -27,11 +27,11 @@ jobs:
       - name: Build for Windows
         run: npm run dist-windows
 
-      - name: Upload Windows build files
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-build
-          path: ./dist
+      # - name: Upload Windows build files
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: windows-build
+      #     path: ./dist
 
       - name: check for built dist files
         run: dir ./dist
@@ -58,6 +58,12 @@ jobs:
       - name: Build for Mac
         run: npm run dist-mac
 
+      - name: Upload macOS build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: macOS-build-test
+          path: ./dist
+
       - name: check for built dist files
         run: ls ./dist
 
@@ -83,6 +89,12 @@ jobs:
 
       - name: Build for Linux
         run: npm run dist-linux
+
+      - name: Upload Linux build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-build-test
+          path: ./dist
 
       - name: check for built dist files
         run: ls ./dist
