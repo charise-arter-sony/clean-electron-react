@@ -33,9 +33,6 @@ jobs:
           name: windows-build-test
           path: ./dist
 
-      - name: check for built dist files
-        run: dir ./dist
-
   mac_install:
     runs-on: macos-latest
 
@@ -64,9 +61,6 @@ jobs:
           name: macOS-build-test
           path: ./dist
 
-      - name: check for built dist files
-        run: ls ./dist
-
   linux_install:
     runs-on: ubuntu-latest
 
@@ -90,6 +84,3 @@ jobs:
         with:
           name: linux-build-test
           path: ./dist
-
-      - name: check for built dist files
-        run: ls ./dist
