@@ -27,16 +27,17 @@ jobs:
       - name: Build for Windows
         run: npm run dist-windows
 
-      # - name: Upload Windows build files
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: windows-build
-      #     path: ./dist
+      - name: Upload Windows build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build-test
+          path: ./dist
 
       - name: check for built dist files
         run: dir ./dist
 
   mac_install:
+    needs: win_install
     runs-on: macos-latest
 
     strategy:
@@ -68,6 +69,7 @@ jobs:
         run: ls ./dist
 
   linux_install:
+    needs: mac_install
     runs-on: ${{ matrix.os }}
 
     strategy:
