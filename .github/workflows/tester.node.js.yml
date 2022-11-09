@@ -27,6 +27,12 @@ jobs:
       - name: Build for Windows
         run: npm run dist-windows
 
+      - name: Upload Windows build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: ./dist
+
       - name: check for built dist files
         run: dir ./dist
 
