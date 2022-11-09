@@ -6,7 +6,6 @@ on:
 
 jobs:
   win_install:
-    needs: mac_install
     runs-on: windows-latest
 
     strategy:
@@ -29,7 +28,7 @@ jobs:
         run: npm run dist-windows
 
       - name: Upload Windows build files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: windows-build-test
           path: ./dist
@@ -69,7 +68,6 @@ jobs:
         run: ls ./dist
 
   linux_install:
-    needs: mac_install
     runs-on: ubuntu-latest
 
     steps:
