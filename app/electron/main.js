@@ -2,9 +2,6 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-// Alert tester imports
-import { message, data } from './alertTester';
-
 let window;
 
 // Show Dialog - Native
@@ -15,6 +12,15 @@ const handleNativeFileOpen = async () => {
 	} else {
 		return filePaths[0];
 	}
+};
+
+// Alert test
+
+const randomData = async () => {
+	let fakeData = [1, 2, 3, 4];
+	let data = fakeData[Math.floor(Math.random() * fakeData.length)];
+	console.log(`Data is: ${data}`);
+	return data;
 };
 
 function createWindow() {
@@ -74,10 +80,11 @@ app.on('window-all-closed', function () {
 // Open file
 ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 
+// Alert test
+ipcMain.handle('alert:data', randomData);
+
 // Node test
 ipcMain.on('nodeTest', (e, args) => {
-	// cp.exec('test.js');
-	//cp.exec('run ./modules/test.js');
 	e.sender.send(
 		'test-succeeded',
 		'Main -> Renderer:\n Message response from Main'
@@ -87,11 +94,18 @@ ipcMain.on('nodeTest', (e, args) => {
 	);
 });
 
-// Alert message sent to renderer
-ipcMain.on('alertMsg', (e, message, data) => {
-	e.sender.send(
-		'Message test. \n',
-		`Main to renderer DATA: ${data},\n MESSAGE: ${message}`,
-		window.webContents.send('alertMessage', data)
-	);
-});
+// // Alert test
+// ipcMain.on('alertData', (e, data) => {
+// 	let data = randomData(fakeData);
+// 	e.sender.send('alertMsg', data);
+// 	console.log(`Data sent from Main to Renderer: ${data}`);
+// });
+
+// // Alert message sent to renderer
+// ipcMain.on('alertMsg', (e, message, data) => {
+// 	e.sender.send(
+// 		'Message test. \n',
+// 		`Main to renderer DATA: ${data},\n MESSAGE: ${message}`,
+// 		window.webContents.send('alertMessage', data)
+// 	);
+// });
