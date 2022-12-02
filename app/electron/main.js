@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+// Alert tester imports
+import { message, data } from './alertTester';
+
 let window;
 
 // Show Dialog - Native
@@ -81,5 +84,14 @@ ipcMain.on('nodeTest', (e, args) => {
 	);
 	console.log(
 		`Message from Renderer: Should call child process (Needs more work): \n ${args}`
+	);
+});
+
+// Alert message sent to renderer
+ipcMain.on('alertMsg', (e, message, data) => {
+	e.sender.send(
+		'Message test. \n',
+		`Main to renderer DATA: ${data},\n MESSAGE: ${message}`,
+		window.webContents.send('alertMessage', data)
 	);
 });

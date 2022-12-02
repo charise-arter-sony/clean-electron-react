@@ -26,6 +26,8 @@ const API = {
 
 	openNativeFile: () => ipcRenderer.invoke('dialog:openNativeFile'),
 
+	onSendToRenderer: (callback) => ipcRenderer.on('alertMessage', callback)
+
 };
 
 contextBridge.exposeInMainWorld('api', API);

@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import NativeOpen from './components/NativeOpen';
 import NodeTest from './components/NodeTest';
 
-
 function App() {
 	const [filePath, setFilePath] = useState([]);
 
+	// Alert test
+	window.api.onSendToRenderer('alertMessage', (_event, message) => {
+		console.log(` Here is the message from main: ${message}`);
+	});
 
 	// Message response Test
 	window.api.receive('test-succeeded', () => {
@@ -23,14 +26,11 @@ function App() {
 		console.log(thePath);
 		setFilePath(thePath);
 	};
-	
-	
 
 	return (
 		<section>
 			<NativeOpen fileOpen={fileOpen} filePath={filePath} />
 			<NodeTest testNode={testNode} />
-		
 		</section>
 	);
 }
