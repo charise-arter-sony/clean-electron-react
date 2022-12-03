@@ -33,23 +33,32 @@ function App() {
 		getMessage(theData);
 	};
 
+	// Get message according to data
 	const getMessage = async data => {
 		switch (data) {
 			case 1:
-				setMessage('Data # 1 --> Message 1');
+				new Notification('Alert #1', {
+					body: 'Data # 1 --> Message 1',
+				});
+
 				break;
 			case 2:
-				setMessage('Data # 2 --> Message 2');
+				new Notification('Alert #2', {
+					body: 'Data # 2 --> Message 2',
+				});
 				break;
 			case 3:
-				setMessage('Data # 3 --> Message 3');
+				new Notification('Alert #3', {
+					body: 'Data # 3 --> Message 3',
+				});
 				break;
 			case 4:
-				setMessage('Data # 4 --> Message 4');
+				new Notification('Alert #4', {
+					body: 'Data # 4 --> Message 4',
+				});
 				break;
 
 			default:
-				setMessage(' Error: No data was received');
 				break;
 		}
 	};
