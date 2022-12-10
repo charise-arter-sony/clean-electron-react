@@ -1,15 +1,14 @@
 import React from 'react';
 
-function AlertTest({ getData }) {
+function AlertTest({ message, handleClose }) {
 	return (
 		<div>
 			<hr />
 			<h2>Alert Test</h2>
-			<button onClick={getData}>Start Fake Process</button>
-			<p>
-				Notification will appear when button is pressed. Close to see other
-				notifications.
-			</p>
+
+			<p>Notification will appear when button is pressed.</p>
+			<p>{message}</p>
+			<button onClick={handleClose}>Close Alert</button>
 		</div>
 	);
 }

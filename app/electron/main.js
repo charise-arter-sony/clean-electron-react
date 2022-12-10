@@ -19,7 +19,7 @@ const handleNativeFileOpen = async () => {
 const randomData = async () => {
 	let fakeData = [1, 2, 3, 4];
 	let data = fakeData[Math.floor(Math.random() * fakeData.length)];
-	console.log(`Data is: ${data}`);
+	console.log(`Auto Data is: ${data}`);
 	return data;
 };
 
@@ -43,6 +43,8 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
+		// run automatically after load is ready
+		// randomData();
 	});
 
 	// Load our HTML file
