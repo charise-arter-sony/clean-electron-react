@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+const { tester } = require('./testprocess');
 let window;
 
 // Show Dialog - Native
@@ -43,6 +44,7 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
+		tester();
 		// run automatically after load is ready
 		// randomData();
 	});
