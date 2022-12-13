@@ -38,45 +38,18 @@ function App() {
 		setFilePath(thePath);
 	};
 
-	// Get data
-	// const getData = async () => {
-	// 	const theData = await window.api.onSendToRenderer('alert:data', data);
-	// 	console.log(theData);
-	// 	setData(theData);
-	// 	getMessage(theData);
-	// };
-
 	// Get message according to data
-	const getMessage = async data => {
+	const getMessage = data => {
 		switch (data) {
-			case 1:
-				// new Notification('Alert #1', {
-				// 	body: 'Data # 1 --> Message 1',
-				// });
-				setMessage('Data for Alert component 1'),
-					(<AlertTest message={message} />);
+			case 0:
+				setMessage('Dependency found'), (<AlertTest message={message} />);
 
 				break;
-			case 2:
-				// new Notification('Alert #2', {
-				// 	body: 'Data # 2 --> Message 2',
-				// });
-				setMessage('Data for Alert component 2'),
-					(<AlertTest message={message} />);
+			case 1:
+				setMessage('Dependency Not Found'), (<AlertTest message={message} />);
 				break;
-			case 3:
-				// new Notification('Alert #3', {
-				// 	body: 'Data # 3 --> Message 3',
-				// });
-				setMessage('Data for Alert component 3'),
-					(<AlertTest message={message} />);
-				break;
-			case 4:
-				// new Notification('Alert #4', {
-				// 	body: 'Data # 4 --> Message 4',
-				// });
-				setMessage('Data for Alert component 4'),
-					(<AlertTest message={message} />);
+			case 1:
+				setMessage('Invalid Command'), (<AlertTest message={message} />);
 				break;
 
 			default:
