@@ -3,7 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 const API = {
 	// Renderer to Main (FFMPEG uses this one to send filePath to Main)
 	send: (channel, data) => {
-		let validChannels = ['nodeTest'];
+		let validChannels = ['nodeTest', 'nodeCheck'];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.send(channel, data);
 		}
@@ -26,7 +26,7 @@ const API = {
 
 	openNativeFile: () => ipcRenderer.invoke('dialog:openNativeFile'),
 
-	onSendToRenderer: () => ipcRenderer.invoke('alert:data'),
+	nodeAlert: () => ipcRenderer.invoke('alert:node'),
 };
 
 contextBridge.exposeInMainWorld('api', API);

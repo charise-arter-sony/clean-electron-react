@@ -21,10 +21,9 @@ function App() {
 
 	const handleClick = async () => {
 		setIsShown(current => !current);
-		const theData = await window.api.onSendToRenderer('alert:data', data);
-		console.log(theData);
-		setData(theData);
-		getMessage(theData);
+		await window.api.nodeAlert().then(x => console.log(`data is ${x}`));
+		// setData(theData);
+		// getMessage(theData);
 	};
 
 	const handleClose = () => {

@@ -3,7 +3,8 @@ const path = require('path');
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Alert test modules
-const { checkNode, checkDummyFile } = require('./scripts/checks');
+const { getNodeVersion } = require('./modules/checkNode');
+const { getDummyFile } = require('./modules/checkDummyFile')
 
 let window;
 
@@ -39,9 +40,6 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
-		checkNode();
-		// run automatically after load is ready
-		// randomData();
 	});
 
 	// Load our HTML file
@@ -56,6 +54,8 @@ function createWindow() {
 // has finished initializing
 app.whenReady().then(() => {
 	createWindow();
+	// check node after app is ready
+	ipcMain.handle('alert:node', getNodeVersion);
 
 	app.on('activate', () => {
 		// On macOS it's common to re-create a window in the app when the
@@ -80,10 +80,7 @@ app.on('window-all-closed', function () {
 ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 
 // Alert test
-ipcMain.handle('alert:node', () => {
-	checkNode();
-});
 
-ipcMain.handle('alert:dummyFile', file => {
-	checkDummyFile();
-});
+ipcMain.handle('dummy:check', (filename) => {
+	getDummyFile(filename)
+})
