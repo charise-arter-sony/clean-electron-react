@@ -1,3 +1,7 @@
+// edit this to be a switch case based on platform of system
+// different systems have different ways of finding files
+// use same format as checkNode file
+
 exports.getDummyFile = (filename = 'dummyfile') => {
 	const { spawn } = require('node:child_process');
 

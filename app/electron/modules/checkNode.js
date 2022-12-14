@@ -4,12 +4,11 @@ exports.getNodeVersion = async () => {
 	const util = require('node:util');
 	const execFile = util.promisify(require('node:child_process').execFile);
 
-	const { stdout } = await execFile('node', ['--version']);
-	console.log(stdout);
+	const { stdout } = await execFile('node', ['-v']);
+	console.log('Output of Node version: ', stdout);
 
 	if (stdout.toString().match(regexNode)) {
-		console.log(`Match!`);
-		console.log(`Success: `, 0);
+		console.log(`It's a match! Success Code: `, 0);
 
 		return 0;
 	} else {
