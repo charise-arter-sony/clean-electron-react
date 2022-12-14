@@ -4,7 +4,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Alert test modules
 const { getNodeVersion } = require('./modules/checkNode');
-const { getDummyFile } = require('./modules/checkDummyFile')
+// const { getDummyFile } = require('./modules/checkDummyFile');
 
 let window;
 
@@ -40,6 +40,7 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
+		// getNodeVersion();
 	});
 
 	// Load our HTML file
@@ -48,14 +49,13 @@ function createWindow() {
 	} else {
 		window.loadFile('app/dist/index.html');
 	}
+	return window;
 }
 
 // This method is called when Electron
 // has finished initializing
 app.whenReady().then(() => {
 	createWindow();
-	// check node after app is ready
-	ipcMain.handle('alert:node', getNodeVersion);
 
 	app.on('activate', () => {
 		// On macOS it's common to re-create a window in the app when the
@@ -80,7 +80,4 @@ app.on('window-all-closed', function () {
 ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 
 // Alert test
-
-ipcMain.handle('dummy:check', (filename) => {
-	getDummyFile(filename)
-})
+ipcMain.handle('check:node', getNodeVersion);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AlertTest from './components/AlertTest';
 import NativeOpen from './components/NativeOpen';
-import NodeTest from './components/NodeTest';
 
 function App() {
 	const [filePath, setFilePath] = useState([]);
@@ -9,19 +8,10 @@ function App() {
 	const [message, setMessage] = useState('');
 	const [isShown, setIsShown] = useState(false);
 
-	// Message response Test
-	window.api.receive('test-succeeded', () => {
-		console.log('NodeTest - Response from main');
-	});
-
-	// Node Test
-	const testNode = () => {
-		api.send('nodeTest', 'Testing');
-	};
-
 	const handleClick = async () => {
 		setIsShown(current => !current);
-		await window.api.nodeAlert().then(x => console.log(`data is ${x}`));
+		const theData = await window.api.checkNodeV();
+		console.log('The Data: ', theData);
 		// setData(theData);
 		// getMessage(theData);
 	};
@@ -59,7 +49,6 @@ function App() {
 	return (
 		<section>
 			<NativeOpen fileOpen={fileOpen} filePath={filePath} />
-			<NodeTest testNode={testNode} />
 			<button onClick={handleClick}>Start Fake Process</button>
 			{isShown && (
 				<AlertTest message={message} data={data} handleClose={handleClose} />

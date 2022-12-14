@@ -1,26 +1,19 @@
-exports.getNodeVersion = () => {
-	const { spawn } = require('node:child_process');
-
+exports.getNodeVersion = async () => {
 	const regexNode = /v16\.17\.0/;
 
-	const child = spawn('node', ['-v']);
+	const util = require('node:util');
+	const execFile = util.promisify(require('node:child_process').execFile);
 
-	child.stdout.on('data', data => {
-		console.log(`stdout: ${data}`);
-		if (data.toString().match(regexNode)) {
-			console.log(`stdout: ${data}`);
-			parent.webContents.send(data)
-			return 0;
-		}
-		return 1;
-	});
+	const { stdout } = await execFile('node', ['--version']);
+	console.log(stdout);
 
-	child.stderr.on('data', data => {
-		console.error(`stderr: ${data}`);
-		return data;
-	});
+	if (stdout.toString().match(regexNode)) {
+		console.log(`Match!`);
+		console.log(`Success: `, 0);
 
-	child.on('close', code => {
-		console.log(`Main Child process exited with code ${code}`);
-	});
+		return 0;
+	} else {
+		console.log(` Error: `, -1);
+		return -1;
+	}
 };
