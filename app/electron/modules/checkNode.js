@@ -8,8 +8,7 @@ exports.getNodeVersion = async () => {
 	console.log('Output of Node version: ', stdout);
 
 	if (stdout.toString().match(regexNode)) {
-		console.log(`It's a match! Success Code: `, 0);
-
+		console.log(`Success Code: `, 0);
 		return 0;
 	} else {
 		console.log(` Error: `, -1);
