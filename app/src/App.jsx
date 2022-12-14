@@ -12,8 +12,8 @@ function App() {
 		setIsShown(current => !current);
 		const theData = await window.api.checkNodeV();
 		console.log('The Data: ', theData);
-		// setData(theData);
-		// getMessage(theData);
+		setData(theData);
+		getMessage(theData);
 	};
 
 	const handleClose = () => {
