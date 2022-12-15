@@ -3,32 +3,20 @@
 // use same format as checkNode file
 
 exports.getDummyFile = (filename = 'dummyfile') => {
-	const { spawn } = require('node:child_process');
-
-	const child = spawn('find', ['/V /C /I', filename]);
-
-	child.stdout.on('data', data => {
-		console.log(`stdout: ${data}`);
-	});
-
-	child.stderr.on('data', data => {
-		console.error(`stderr: ${data}`);
-	});
-
-	child.on('close', code => {
-		switch (code) {
-			case 1:
-				console.log(`File code ${code}: Searched file not found`);
-				break;
-			case 2:
-				console.log(
-					`File code ${code}: Searched file not found or invalid command given... most likely invalid command`
-				);
-				break;
-
-			default:
-				console.log('Found file');
-				break;
+	const { exec } = require('node:child_process');
+	exec('dir ' + filename + '* /s', (error, stdout, stderr) => {
+		if (error) {
+			console.error(`exec error: ${error}`);
+			return 1;
+		} else {
+			try {
+				console.log(`stdout: ${stdout}`);
+				let output = stdout.toString();
+				console.log(`Output found: ${output}`);
+			} catch (error) {
+				console.error(`stderr: ${stderr}`);
+				console.log(`There was an error: ${error}`);
+			}
 		}
 	});
 };

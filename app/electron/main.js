@@ -4,7 +4,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Alert test modules
 const { getNodeVersion } = require('./modules/checkNode');
-// const { getDummyFile } = require('./modules/checkDummyFile');
+const { getDummyFile } = require('./modules/checkDummyFile');
 
 let window;
 
@@ -40,7 +40,7 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
-		// getNodeVersion();
+
 	});
 
 	// Load our HTML file
@@ -81,3 +81,6 @@ ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 
 // Alert test
 ipcMain.handle('check:node', getNodeVersion);
+
+// Check file test
+ipcMain.handle('check:file', () => getDummyFile)

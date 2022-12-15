@@ -27,6 +27,7 @@ const API = {
 	openNativeFile: () => ipcRenderer.invoke('dialog:openNativeFile'),
 
 	checkNodeV: window => ipcRenderer.invoke('check:node', window),
+	checkFile: () => ipcRenderer.invoke('check:file'),
 };
 
 contextBridge.exposeInMainWorld('api', API);
