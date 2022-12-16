@@ -2,21 +2,29 @@
 // different systems have different ways of finding files
 // use same format as checkNode file
 
-exports.getDummyFile = (filename = 'dummyfile') => {
+const getDummyFile = () => {
 	const { exec } = require('node:child_process');
-	exec('dir ' + filename + '* /s', (error, stdout, stderr) => {
+	let filename = 'dummyFile';
+	const notFound = 'File Not Found';
+	exec(' dir ' + filename + '.* /s', (error, stdout, stderr) => {
 		if (error) {
-			console.error(`exec error: ${error}`);
-			return 1;
-		} else {
-			try {
-				console.log(`stdout: ${stdout}`);
-				let output = stdout.toString();
-				console.log(`Output found: ${output}`);
-			} catch (error) {
-				console.error(`stderr: ${stderr}`);
-				console.log(`There was an error: ${error}`);
+			let resultError = error.toString();
+
+			if (resultError.includes(notFound)) {
+				console.log(`\n ${filename} not found`);
+				return 1;
+			} else {
+				try {
+					console.log(`stdout: ${stdout}`);
+					let output = stdout.toString();
+					console.log(`Output found: ${output}`);
+				} catch (error) {
+					console.error(`stderr: ${stderr}`);
+					console.log(`There was an error: ${error}`);
+				}
 			}
 		}
 	});
 };
+
+getDummyFile();

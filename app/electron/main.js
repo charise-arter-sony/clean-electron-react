@@ -40,7 +40,6 @@ function createWindow() {
 	window.webContents.on('did-finish-load', () => {
 		window.show();
 		window.focus();
-
 	});
 
 	// Load our HTML file
@@ -83,4 +82,4 @@ ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 ipcMain.handle('check:node', getNodeVersion);
 
 // Check file test
-ipcMain.handle('check:file', () => getDummyFile)
+// ipcMain.handle('check:file', getDummyFile);

@@ -13,9 +13,9 @@ function App() {
 	const handleClick = async () => {
 		setIsShown(current => !current);
 		const theData = await window.api.checkNodeV();
-		// const findFile = await window.api.checkFile();
+		const findFile = await window.api.checkFile();
 		console.log('The Data: ', theData);
-		// console.log('The File Data: ', findFile);
+		console.log('The File Data: ', findFile);
 		setData(theData);
 		// setFileData(findFile);
 		getMessage(theData);
