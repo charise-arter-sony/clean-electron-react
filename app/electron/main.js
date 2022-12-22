@@ -4,21 +4,21 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Alert test modules
 const { getNodeVersion } = require('./modules/checkNode');
-const { getDummyFile } = require('./modules/checkDummyFile');
+// const { getDummyFile } = require('./modules/checkDummyFile');
 
 let window;
 
-// Show Dialog - Native
-const handleNativeFileOpen = async () => {
-	const { canceled, filePaths } = await dialog.showOpenDialog();
-	if (canceled) {
-		return;
-	} else {
-		return filePaths[0];
-	}
-};
+let nodeMsg = '';
 
-// Alert test
+// Show Dialog - Native
+// const handleNativeFileOpen = async () => {
+// 	const { canceled, filePaths } = await dialog.showOpenDialog();
+// 	if (canceled) {
+// 		return;
+// 	} else {
+// 		return filePaths[0];
+// 	}
+// };
 
 function createWindow() {
 	// Create a new window
@@ -42,6 +42,8 @@ function createWindow() {
 		window.focus();
 	});
 
+	// Send message to renderer
+
 	// Load our HTML file
 	if (isDevelopment) {
 		window.loadURL('http://localhost:40992');
@@ -55,7 +57,7 @@ function createWindow() {
 // has finished initializing
 app.whenReady().then(() => {
 	createWindow();
-
+	// nodeMsg = getNodeVersion();
 	app.on('activate', () => {
 		// On macOS it's common to re-create a window in the app when the
 		// dock icon is clicked and there are no other windows open.
@@ -74,12 +76,30 @@ app.on('window-all-closed', function () {
 	}
 });
 
+// IPC practice
+
+// send message FROM Main to renderer
+
+let count = 0;
+
+// every second send a message with channel name of count and pass
+// along this data
+
+setInterval(() => {
+	// channel and data
+	window.webContents.send('count', count++);
+}, 2000);
+
+// window.webContents.send('alert:node', nodeMsg);
+// Listen for message from RENDERER
+// main should listen for channel set in preload function for Renderer --> Main
+// event has information about what process sent the message
+ipcMain.on('msg:renderer', (event, args) => {
+	console.log(`Args from Renderer: ${args}`);
+});
+
 // IPC events
 // Open file
-ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
+//ipcMain.handle('dialog:openNativeFile', handleNativeFileOpen);
 
 // Alert test
-ipcMain.handle('check:node', getNodeVersion);
-
-// Check file test
-// ipcMain.handle('check:file', getDummyFile);

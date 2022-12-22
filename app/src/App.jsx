@@ -1,87 +1,59 @@
 import React, { useState } from 'react';
-import AlertTest from './components/AlertTest';
-import NativeOpen from './components/NativeOpen';
+import { useEffect } from 'react';
+// import AlertTest from './components/AlertTest';
+// import NativeOpen from './components/NativeOpen';
 
 function App() {
-	const [filePath, setFilePath] = useState([]);
-	const [data, setData] = useState();
-	const [fileData, setFileData] = useState();
-	const [message, setMessage] = useState('');
-	const [fileMessage, setFileMessage] = useState('');
-	const [isShown, setIsShown] = useState(false);
+	// stuff from video to understand ipc
 
-	const handleClick = async () => {
-		setIsShown(current => !current);
-		const theData = await window.api.checkNodeV();
-		const findFile = await window.api.checkFile();
-		console.log('The Data: ', theData);
-		console.log('The File Data: ', findFile);
-		setData(theData);
-		// setFileData(findFile);
-		getMessage(theData);
-		// getFileMsg(findFile);
+	// useEffect(() => {
+	// 	window.api.startNodeCheck();
+	// 	console.log(' Message to main sent to start Node check');
+	// });
+
+	// const [nodeAlert, setNodeAlert] = useState('');
+
+	// window.api.alertNodeMsg((data) => {
+	// 	console.log(`Node Alert Data: ${data}`);
+	// 	setNodeAlert(data);
+	// });
+	// Renderer to main
+
+	// variable set in main also set here in renderer
+	const [customMsg, setCustomMsg] = useState(
+		'Hello from the renderer process in React'
+	);
+	const [count, setCount] = useState(0);
+	// make sure to use useState Hook
+	window.api.onCount((data) => {
+		console.log(`Data: ${data}`);
+		setCount(data);
+		// count should update every second... when main sends message
+	});
+
+	const sendToMain = () => {
+		// possibly put in use effect to do automatically
+		// call function in preload to send message to MAIN
+		window.api.sendMsgToMain(customMsg);
 	};
-
-	const handleClose = () => {
-		setIsShown(current => !current);
-	};
-
-	// Show Dialog - Naive Open file
-	const fileOpen = async () => {
-		const thePath = await window.api.openNativeFile();
-		console.log(thePath);
-		setFilePath(thePath);
-	};
-
-	// Get message according to data
-	const getMessage = data => {
-		switch (data) {
-			case 0:
-				setMessage('Dependency found'), (<AlertTest message={message} />);
-
-				break;
-			case 1:
-				setMessage('Dependency Not Found'), (<AlertTest message={message} />);
-				break;
-			case 1:
-				setMessage('Invalid Command'), (<AlertTest message={message} />);
-				break;
-
-			default:
-				break;
-		}
-	};
-	// Get message according to file data
-	// const getFileMsg = fileData => {
-	// 	switch (fileData) {
-	// 		case 0:
-	// 			setFileMessage('File found'), (<AlertTest message={fileMessage} />);
-
-	// 			break;
-	// 		case 1:
-	// 			setFileMessage('File Not Found'), (<AlertTest message={fileMessage} />);
-	// 			break;
-
-	// 		default:
-	// 			break;
-	// 	}
-	// };
-
 	return (
-		<section>
-			<NativeOpen fileOpen={fileOpen} filePath={filePath} />
-			<button onClick={handleClick}>Start Fake Process</button>
-			{isShown && (
-				<AlertTest message={message} data={data} handleClose={handleClose} />
-			)}
-			{/* {isShown && (
-				<AlertTest
-					message={message}
-					data={fileData}
-					handleClose={handleClose}
-				/>
-			)} */}
-		</section>
+		<div>
+			<hr />
+			<h1> Count: {count} </h1>
+			<input type='text' value={customMsg} />
+			<br />
+			<button onClick={sendToMain}>
+				Send Message TO Main: Renderer to Main{' '}
+			</button>
+			<br />
+			<button> Get message FROM Main: Main to Renderer </button>
+			<hr />
+
+			<p>
+				<h2> Alert Message tester</h2>
+				{/* <h3> Node Alert: {nodeAlert}</h3> */}
+			</p>
+		</div>
 	);
 }
 

@@ -8,10 +8,13 @@ exports.getNodeVersion = async () => {
 	console.log('Output of Node version: ', stdout);
 
 	if (stdout.toString().match(regexNode)) {
-		console.log(`Success Code: `, 0);
-		return 0;
+		console.log('Node found!');
+		//await window.webContents.send('Node found!!!');
+		return 'Correct Node version found!';
+		// return 'Correct Node version found!';
 	} else {
-		console.log(` Error: `, -1);
-		return -1;
+		console.log('Node not found');
+		//await window.webContents.send('Not found. Install Node!');
+		return 'Node not found! Install node';
 	}
 };
