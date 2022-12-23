@@ -7,8 +7,8 @@ const { getNodeVersion } = require('./modules/checkNode');
 // const { getDummyFile } = require('./modules/checkDummyFile');
 
 let window;
-
-let nodeMsg = '';
+let count = 0;
+let result = '';
 
 // Show Dialog - Native
 // const handleNativeFileOpen = async () => {
@@ -55,9 +55,17 @@ function createWindow() {
 
 // This method is called when Electron
 // has finished initializing
-app.whenReady().then(() => {
-	createWindow();
-	// nodeMsg = getNodeVersion();
+app.whenReady().then(async () => {
+	let x = createWindow();
+	result = await getNodeVersion(window);
+	x.webContents.send('helloWorld', result);
+
+	setInterval(() => {
+		// channel and data
+		window.webContents.send('count', count++);
+		console.log(`Result from main: ${result}`);
+	}, 2000);
+
 	app.on('activate', () => {
 		// On macOS it's common to re-create a window in the app when the
 		// dock icon is clicked and there are no other windows open.
@@ -80,15 +88,8 @@ app.on('window-all-closed', function () {
 
 // send message FROM Main to renderer
 
-let count = 0;
-
 // every second send a message with channel name of count and pass
 // along this data
-
-setInterval(() => {
-	// channel and data
-	window.webContents.send('count', count++);
-}, 2000);
 
 // window.webContents.send('alert:node', nodeMsg);
 // Listen for message from RENDERER

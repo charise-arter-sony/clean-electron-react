@@ -18,7 +18,7 @@ const API = {
 	},
 
 	receive: (channel, func) => {
-		let validChannels = [];
+		let validChannels = ['count', 'helloWorld'];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.on(channel, (_, ...args) => func(...args));
 		}
@@ -34,17 +34,21 @@ const API = {
 	// listen by passing in callback function
 	// takes channel name from main (ex. count)
 
-	onCount: (callback) =>
-		ipcRenderer.on('count', (event, args) => {
-			// callback function WITH ARGS
-			callback(args);
-			// renderer process creates callback function
-		}),
+	// onCount: (callback) => {
+	// 	ipcRenderer.on('count', (event, args) => {
+	// 		// callback function WITH ARGS
+	// 		callback(args);
+	// 		// renderer process creates callback function
+	// 	});
+	// },
 
-	alertNodeMsg: (callback) =>
-		ipcRenderer.on('alert:node', (event, args) => {
-			callback(args);
-		}),
+	// alertNodeMsg: (callback) => {
+	// 	console.log('Before Alert Node... HI');
+	// 	ipcRenderer.on('helloWorld', (event, args) => {
+	// 		console.log(`Args from preload: `, args);
+	// 		callback(args);
+	// 	});
+	// },
 };
 
 contextBridge.exposeInMainWorld('api', API);
